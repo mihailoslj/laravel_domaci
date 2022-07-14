@@ -1,5 +1,6 @@
 <?php
-use App\Models\Product;
+
+use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,18 +15,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/products', function(){
-    return Product::all(); //vraca sve proizvode
-});
+Route::get('/products', [ProductController::class, 'index']); //pozivam metodu index kase ProductController
+                                                            //vraca sve proizvode
 
-Route::post('/products', function(){ //unos u tabelu post pozivom
-    return Product::create([
-        'name' => 'Product one',
-        'slug' => 'product-one',
-        'description' => 'This is product one',
-        'price' => '9.99'
-    ]);
-});
+
+// Route::post('/products', function(){ //unos u tabelu post pozivom
+//     return Product::create([
+//         'name' => 'Product one',
+//         'slug' => 'product-one',
+//         'description' => 'This is product one',
+//         'price' => '9.99'
+//     ]);
+// });
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
