@@ -19,14 +19,7 @@ Route::get('/products', [ProductController::class, 'index']); //pozivam metodu i
                                                             //vraca sve proizvode
 
 
-// Route::post('/products', function(){ //unos u tabelu post pozivom
-//     return Product::create([
-//         'name' => 'Product one',
-//         'slug' => 'product-one',
-//         'description' => 'This is product one',
-//         'price' => '9.99'
-//     ]);
-// });
+Route::post('/products', [ProductController::class, 'store']);
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

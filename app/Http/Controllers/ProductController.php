@@ -23,9 +23,19 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+     //unos podataka u bazu
+     //parametar request ce da sadrzi sve podatke koje korisnik posalje za unos
+     //pisem i validaciju podataka
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'slug' => 'required',
+            'price' => 'required',
+        ]);
+
+        return Product::create($request->all());
     }
 
     /**
