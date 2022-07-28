@@ -1,5 +1,8 @@
 <?php
 
+//kreirao sam ovo uz pomoc
+//php artisan make:controler ProductController --api
+
 namespace App\Http\Controllers;
 
 use App\Models\Product;
@@ -26,10 +29,10 @@ class ProductController extends Controller
 
      //unos podataka u bazu
      //parametar request ce da sadrzi sve podatke koje korisnik posalje za unos
-     //pisem i validaciju podataka
+     //pisem i validaciju podataka u smislu da mi odredjena polja obavezna, daje mi citljiviji error message
     public function store(Request $request)
     {
-        $request->validate([
+        $request->validate([    
             'name' => 'required',
             'slug' => 'required',
             'price' => 'required',
@@ -44,9 +47,11 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    //vraca proizvod na osnovu id-a
     public function show($id)
     {
-        //
+        return Product::find($id);
     }
 
     /**
@@ -58,7 +63,9 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $product = Product::find($id); //uzimam proizvod na osnovu id-a, jer mi je to prim. kljuc
+        $product -> update($request->all());
+        return $product; 
     }
 
     /**
@@ -69,6 +76,15 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return Product::destroy($id);
     }
+
+    /** 
+    * @param  str  $name
+    * @return \Illuminate\Http\Response
+    */
+   public function search($name)
+   {
+       return Product::where('name','like','%'.$name.'%')->get();
+   }
 }
